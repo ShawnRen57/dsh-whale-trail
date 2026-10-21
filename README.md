@@ -20,6 +20,10 @@ Whale Trail for DeepSeek Harness 是一款以小鲸鱼为主题的成就徽章�
 
 点击 Harness 左下角 **用户信息 → 我的徽章**，打开你的收藏册。
 
+<img src="docs/images/badges-entry.png" width="240" alt="左下角用户信息弹层：我的徽章入口与设置、意见反馈、退出登录并列">
+
+*账户菜单入口：点击带奖章图标的「我的徽章」。*
+
 ![Whale Trail 我的徽章：两行成就统计、亮金叶枝与印章风徽章](docs/images/my-badges.png)
 
 *截图为独立测试档案的演示进度。已获得徽章按获得时间倒排；未获得徽章分类展示，普通徽章为灰色，悬浮可查看获得方式。*
@@ -30,12 +34,12 @@ Whale Trail for DeepSeek Harness 是一款以小鲸鱼为主题的成就徽章�
 
 <table>
   <tr>
-    <td align="center"><img src="assets/png-256/days.100.png" width="180" alt="百日远航，累计使用100天"><br><b>百日远航</b><br>累计使用 · 100 天</td>
-    <td align="center"><img src="assets/png-256/streak.30.png" width="180" alt="潮汐之约，连续使用30天"><br><b>潮汐之约</b><br>连续使用 · 30 天</td>
+    <td align="center"><img src="assets/png-256/days.1.png" width="180" alt="初次下潜，累计使用1天"><br><b>初次下潜</b><br>累计使用 · 1 天</td>
+    <td align="center"><img src="assets/png-256/streak.3.png" width="180" alt="三日同游，连续使用3天"><br><b>三日同游</b><br>连续使用 · 3 天</td>
     <td align="center"><img src="assets/png-256/tokens.1000000.png" width="180" alt="深海回响，累计记录100万Token"><br><b>深海回响</b><br>Token 回响 · 1M</td>
   </tr>
   <tr>
-    <td align="center"><img src="assets/png-256/dialogues.200.png" width="180" alt="对话领航，累计200轮有效对话"><br><b>对话领航</b><br>累计对话 · 200 轮</td>
+    <td align="center"><img src="assets/png-256/dialogues.1.png" width="180" alt="初声相遇，累计1轮有效对话"><br><b>初声相遇</b><br>累计对话 · 1 轮</td>
     <td align="center"><img src="assets/png-256/festival.mid-autumn.2026.png" width="180" alt="月下鲸歌，2026中秋节限定"><br><b>月下鲸歌</b><br>节日限定 · 中秋</td>
     <td align="center"><img src="assets/hidden-placeholder.svg" width="180" alt="隐藏徽章问号占位"><br><b>还有未被发现的航迹</b><br>隐藏典藏 · 等你探索</td>
   </tr>
