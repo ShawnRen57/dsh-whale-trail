@@ -1,0 +1,87 @@
+{
+  "name": "dsh-whale-trail",
+  "version": "0.2.4",
+  "description": "Whale Trail · 鲸迹 — automatic local achievement badges for DeepSeek Harness",
+  "type": "module",
+  "license": "UNLICENSED",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./remote": "./lib/remote.js",
+    "./typert": "./lib/typert.js",
+    "./package.json": "./package.json",
+    "./cordis.patch.yml": "./cordis.patch.yml"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/index.js.map",
+    "lib/client.js",
+    "lib/remote.js",
+    "lib/typert.js",
+    "lib/build-info.json",
+    "assets/catalog.json",
+    "assets/web",
+    "README.md",
+    "cordis.patch.yml",
+    "docs/images"
+  ],
+  "dsh": {
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-settings-account",
+        "@deepseek-ai/dsh-client-ui-settings-general",
+        "@deepseek-ai/dsh-api-remotes"
+      ]
+    },
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "4.0.5",
+    "@deepseek-ai/dsh-typert-protocol": "0.2.1-rc.2",
+    "@deepseek-ai/schemastery": "*"
+  },
+  "scripts": {
+    "test": "node scripts/build.mjs && node scripts/test-build.mjs && node --test tests/*.test.mjs",
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "@types/react": "^18.3.26",
+    "@types/react-dom": "^18.3.7",
+    "esbuild": "^0.25.12",
+    "jsdom": "^26.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sharp": "^0.35.5",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=24",
+    "dsh": "0.2.1-rc.2"
+  },
+  "dependencies": {
+    "zod": "4.4.3"
+  },
+  "private": true,
+  "homepage": "https://github.com/ShawnRen57/dsh-whale-trail",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShawnRen57/dsh-whale-trail.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ShawnRen57/dsh-whale-trail/issues"
+  },
+  "author": "ShawnRen57",
+  "keywords": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "badges",
+    "achievements",
+    "whale-trail"
+  ]
+}

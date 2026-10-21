@@ -1,0 +1,7 @@
+node_modules/
+vendor/
+lib/
+qa/
+*.tgz
+*.zip
+.DS_Store

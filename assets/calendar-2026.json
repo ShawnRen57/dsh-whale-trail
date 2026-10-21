@@ -1,0 +1,14 @@
+{
+  "version": "CN-2026-v1",
+  "timezone": "Asia/Shanghai",
+  "source": "https://www.hko.gov.hk/tc/gts/time/calendar/pdf/files/2026.pdf",
+  "verified": "2026-10-20",
+  "dates": {
+    "new-year": "2026-01-01",
+    "spring": "2026-02-17",
+    "dragon-boat": "2026-06-19",
+    "mid-autumn": "2026-09-25",
+    "national-day-cn": "2026-10-01",
+    "programmer-day": "2026-10-24"
+  }
+}
