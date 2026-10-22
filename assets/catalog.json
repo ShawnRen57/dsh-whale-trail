@@ -11,6 +11,16 @@
     "existing": "01_累计1天_初次下潜.png"
   },
   {
+    "id": "days.3",
+    "name": "三日探潮",
+    "family": "days",
+    "threshold": 3,
+    "value": "3 D",
+    "label": "TOTAL DAYS",
+    "scene": "A young smiling blue whale with a small shell charm, three wave crests and a distant island; no human yet",
+    "asset": "days.3.png"
+  },
+  {
     "id": "days.7",
     "name": "一周航迹",
     "family": "days",
@@ -20,6 +30,16 @@
     "scene": "Explorer whale with satchel and scarf, island and star",
     "asset": "days.7.png",
     "existing": "02_累计7天_一周航迹.png"
+  },
+  {
+    "id": "days.14",
+    "name": "双周寻岛",
+    "family": "days",
+    "threshold": 14,
+    "value": "14 D",
+    "label": "TOTAL DAYS",
+    "scene": "A scarf-wearing explorer whale and a young blue-haired whale-girl apprentice discovering a tiny island with a simple compass",
+    "asset": "days.14.png"
   },
   {
     "id": "days.30",
@@ -33,6 +53,16 @@
     "existing": "03_累计30天_三十日海图.png"
   },
   {
+    "id": "days.60",
+    "name": "六十日风帆",
+    "family": "days",
+    "threshold": 60,
+    "value": "60 D",
+    "label": "TOTAL DAYS",
+    "scene": "The whale-girl as a junior captain hoisting two crisp sails while her whale companion scouts the waves",
+    "asset": "days.60.png"
+  },
+  {
     "id": "days.100",
     "name": "百日远航",
     "family": "days",
@@ -41,6 +71,26 @@
     "label": "TOTAL DAYS",
     "scene": "Same whale-girl now an admiral with elegant cap, unfurled ocean chart and lighthouse fleet",
     "asset": "days.100.png"
+  },
+  {
+    "id": "days.180",
+    "name": "半岁环洋",
+    "family": "days",
+    "threshold": 180,
+    "value": "180 D",
+    "label": "TOTAL DAYS",
+    "scene": "The whale-girl fleet commander tracing a half-world circumnavigation around a nautical globe, two tiny sailboats and a whale escort",
+    "asset": "days.180.png"
+  },
+  {
+    "id": "days.365",
+    "name": "一岁鲸航",
+    "family": "days",
+    "threshold": 365,
+    "value": "365 D",
+    "label": "TOTAL DAYS",
+    "scene": "The whale-girl as legendary ocean admiral with an ornate sailor cap and year-wheel star chart, her whale circling a complete ocean globe; grand yet readable",
+    "asset": "days.365.png"
   },
   {
     "id": "streak.3",
@@ -63,6 +113,16 @@
     "asset": "streak.7.png"
   },
   {
+    "id": "streak.14",
+    "name": "双周灯语",
+    "family": "streak",
+    "threshold": 14,
+    "value": "14 D",
+    "label": "STREAK DAYS",
+    "scene": "An apprentice whale-girl and scarf whale lighting a pair of island beacons; a lantern and two linked light signals",
+    "asset": "streak.14.png"
+  },
+  {
     "id": "streak.30",
     "name": "潮汐之约",
     "family": "streak",
@@ -71,6 +131,16 @@
     "label": "STREAK DAYS",
     "scene": "Whale-girl lighthouse keeper in cape holding a bright lantern beside a lighthouse",
     "asset": "streak.30.png"
+  },
+  {
+    "id": "streak.60",
+    "name": "六十夜守望",
+    "family": "streak",
+    "threshold": 60,
+    "value": "60 D",
+    "label": "STREAK DAYS",
+    "scene": "The whale-girl senior lighthouse keeper on a balcony linking an archipelago of three beacons with sweeping warm light",
+    "asset": "streak.60.png"
   },
   {
     "id": "streak.100",
@@ -83,35 +153,14 @@
     "asset": "streak.100.png"
   },
   {
-    "id": "tokens.10000",
-    "name": "微光回声",
-    "family": "tokens",
-    "threshold": 10000,
-    "value": "10K",
-    "label": "TOTAL TOKENS",
-    "scene": "Baby whale listening to one luminous echo pearl, simple sonar rings",
-    "asset": "tokens.10000.png"
-  },
-  {
-    "id": "tokens.100000",
-    "name": "蓝海回声",
-    "family": "tokens",
-    "threshold": 100000,
-    "value": "100K",
-    "label": "TOTAL TOKENS",
-    "scene": "Explorer whale with notebook tracing a chain of echo pearls and sonar rings",
-    "asset": "tokens.100000.png"
-  },
-  {
     "id": "tokens.1000000",
     "name": "深海回响",
     "family": "tokens",
     "threshold": 1000000,
     "value": "1M",
     "label": "TOTAL TOKENS",
-    "scene": "Whale-girl archivist holding book and sonar",
-    "asset": "tokens.1000000.png",
-    "existing": "04_100万Token_深海回响.png"
+    "scene": "Entry tier: a baby blue whale listening to one sea-green echo pearl and a few sonar rings; no human character, simple blue and sea-green scene",
+    "asset": "tokens.1000000.png"
   },
   {
     "id": "tokens.10000000",
@@ -120,8 +169,48 @@
     "threshold": 10000000,
     "value": "10M",
     "label": "TOTAL TOKENS",
-    "scene": "Same whale-girl as chief archivist opening a magnificent circular underwater archive, books and whale-song ribbons",
+    "scene": "Second tier: scarf-wearing explorer whale with notebook following several sea-green echo pearls; a tiny young whale-girl apprentice beside it, still an explorer not chief archivist",
     "asset": "tokens.10000000.png"
+  },
+  {
+    "id": "tokens.100000000",
+    "name": "亿浪回声",
+    "family": "tokens",
+    "threshold": 100000000,
+    "value": "100M",
+    "label": "TOTAL TOKENS",
+    "scene": "The whale-girl as an ocean archivist opening a luminous sonar book, sea-green circular records and a whale behind her",
+    "asset": "tokens.100000000.png"
+  },
+  {
+    "id": "tokens.1000000000",
+    "name": "十亿潮汐",
+    "family": "tokens",
+    "threshold": 1000000000,
+    "value": "1B",
+    "label": "TOTAL TOKENS",
+    "scene": "The whale-girl chief archivist conducting a grand circular underwater library, one whale and flowing sea-green whale-song ribbons",
+    "asset": "tokens.1000000000.png"
+  },
+  {
+    "id": "tokens.10000000000",
+    "name": "百亿海藏",
+    "family": "tokens",
+    "threshold": 10000000000,
+    "value": "10B",
+    "label": "TOTAL TOKENS",
+    "scene": "The whale-girl curator of a magnificent ocean observatory, an armillary sonar sphere, stacked archive scrolls and a whale constellation",
+    "asset": "tokens.10000000000.png"
+  },
+  {
+    "id": "tokens.100000000000",
+    "name": "千亿鲸宇",
+    "family": "tokens",
+    "threshold": 100000000000,
+    "value": "100B",
+    "label": "TOTAL TOKENS",
+    "scene": "Top tier: the whale-girl ocean sage holds a miniature spiral galaxy of whale-song records, a great blue whale orbiting the cosmic sea archive; cream/navy/cobalt/sea-green, grand flat seal composition",
+    "asset": "tokens.100000000000.png"
   },
   {
     "id": "dialogues.1",
@@ -144,6 +233,16 @@
     "asset": "dialogues.10.png"
   },
   {
+    "id": "dialogues.20",
+    "name": "二十轮畅游",
+    "family": "dialogues",
+    "threshold": 20,
+    "value": "20",
+    "label": "DIALOGUE ROUNDS",
+    "scene": "Whale-girl apprentice with small orange radio and scarf whale exchanging linked speech bubbles between two islands",
+    "asset": "dialogues.20.png"
+  },
+  {
     "id": "dialogues.50",
     "name": "五十回响",
     "family": "dialogues",
@@ -152,6 +251,16 @@
     "label": "DIALOGUE ROUNDS",
     "scene": "The blue-haired whale-girl as a confident radio operator wearing sailor jacket and headset, exchanging two large speech bubbles with a friendly whale beside a compact radio console. Ocean-wave signals bridge the two bubbles.",
     "asset": "dialogues.50.png"
+  },
+  {
+    "id": "dialogues.100",
+    "name": "百轮知音",
+    "family": "dialogues",
+    "threshold": 100,
+    "value": "100",
+    "label": "DIALOGUE ROUNDS",
+    "scene": "The whale-girl senior radio navigator with a shoulder cape at a ship radio desk, a whale companion and a semicircle of interlinked speech bubbles",
+    "asset": "dialogues.100.png"
   },
   {
     "id": "dialogues.200",
@@ -164,6 +273,26 @@
     "asset": "dialogues.200.png"
   },
   {
+    "id": "dialogues.500",
+    "name": "五百轮共航",
+    "family": "dialogues",
+    "threshold": 500,
+    "value": "500",
+    "label": "DIALOGUE ROUNDS",
+    "scene": "The whale-girl ocean ambassador at a round nautical table connecting several island radios and speech-bubble constellations, her whale companion beside the chart",
+    "asset": "dialogues.500.png"
+  },
+  {
+    "id": "dialogues.1000",
+    "name": "千轮鲸鸣",
+    "family": "dialogues",
+    "threshold": 1000,
+    "value": "1000",
+    "label": "DIALOGUE ROUNDS",
+    "scene": "The whale-girl as a legendary conversation conductor in an elegant sailor coat and cap, a great whale and an entire starry ocean network of speech-bubble constellations; copper-orange signal accents",
+    "asset": "dialogues.1000.png"
+  },
+  {
     "id": "festival.new-year.2026",
     "name": "新岁启航",
     "family": "festival",
@@ -172,6 +301,36 @@
     "label": "NEW YEAR",
     "scene": "Whale-girl raising a tiny sail under celebratory sunrise and confetti",
     "asset": "festival.new-year.2026.png"
+  },
+  {
+    "id": "festival.laba.2026",
+    "name": "腊八暖鲸",
+    "family": "festival",
+    "threshold": 2026,
+    "value": "2026",
+    "label": "LABA FESTIVAL",
+    "scene": "Whale-girl serving a steaming bowl of eight-treasure porridge to a small whale, plum blossoms and warm mittens",
+    "asset": "festival.laba.2026.png"
+  },
+  {
+    "id": "festival.valentine.2026",
+    "name": "心海来信",
+    "family": "festival",
+    "threshold": 2026,
+    "value": "2026",
+    "label": "VALENTINE DAY",
+    "scene": "Whale-girl and small whale exchanging a heart-shaped sealed letter and one rose, wholesome friendship",
+    "asset": "festival.valentine.2026.png"
+  },
+  {
+    "id": "festival.new-year-eve.2026",
+    "name": "辞岁守潮",
+    "family": "festival",
+    "threshold": 2026,
+    "value": "2026",
+    "label": "NEW YEAR EVE",
+    "scene": "Whale-girl and whale enjoying reunion dumplings beside a paper-cut window and small celebratory sparkles",
+    "asset": "festival.new-year-eve.2026.png"
   },
   {
     "id": "festival.spring.2026",
@@ -184,6 +343,86 @@
     "asset": "festival.spring.2026.png"
   },
   {
+    "id": "festival.lantern.2026",
+    "name": "灯海寻鲸",
+    "family": "festival",
+    "threshold": 2026,
+    "value": "2026",
+    "label": "LANTERN FESTIVAL",
+    "scene": "Whale-girl carrying a round red lantern with a whale-shaped lantern over the waves, bowl of tangyuan",
+    "asset": "festival.lantern.2026.png"
+  },
+  {
+    "id": "festival.womens-day.2026",
+    "name": "她与星海",
+    "family": "festival",
+    "threshold": 2026,
+    "value": "2026",
+    "label": "WOMENS DAY",
+    "scene": "Confident whale-girl navigator raising a compass beside mimosa flowers and a brave little whale, dignified joyful composition",
+    "asset": "festival.womens-day.2026.png"
+  },
+  {
+    "id": "festival.qingming.2026",
+    "name": "清风寄鲸",
+    "family": "festival",
+    "threshold": 2026,
+    "value": "2026",
+    "label": "QINGMING",
+    "scene": "Whale-girl releasing a small swallow kite under a willow branch with her whale companion, quiet spring remembrance, no graves",
+    "asset": "festival.qingming.2026.png"
+  },
+  {
+    "id": "festival.earth-day.2026",
+    "name": "蔚蓝家园",
+    "family": "festival",
+    "threshold": 2026,
+    "value": "2026",
+    "label": "EARTH DAY",
+    "scene": "Whale-girl gently holding a small Earth globe with a whale curled around it, two green leaves and clean ocean waves",
+    "asset": "festival.earth-day.2026.png"
+  },
+  {
+    "id": "festival.book-day.2026",
+    "name": "书海拾光",
+    "family": "festival",
+    "threshold": 2026,
+    "value": "2026",
+    "label": "WORLD BOOK DAY",
+    "scene": "Whale-girl and whale reading a wide open book whose pages become ocean waves, one small bookmark star",
+    "asset": "festival.book-day.2026.png"
+  },
+  {
+    "id": "festival.labour-day.2026",
+    "name": "匠心筑港",
+    "family": "festival",
+    "threshold": 2026,
+    "value": "2026",
+    "label": "LABOUR DAY",
+    "scene": "Whale-girl craftsperson in sailor workwear using a small wooden mallet to build a little harbor with an industrious whale helper",
+    "asset": "festival.labour-day.2026.png"
+  },
+  {
+    "id": "festival.childrens-day.2026",
+    "name": "童心逐浪",
+    "family": "festival",
+    "threshold": 2026,
+    "value": "2026",
+    "label": "CHILDRENS DAY",
+    "scene": "Whale-girl flying a tiny whale-shaped balloon with a baby whale, paper windmill and playful waves",
+    "asset": "festival.childrens-day.2026.png"
+  },
+  {
+    "id": "festival.oceans-day.2026",
+    "name": "守护鲸蓝",
+    "family": "festival",
+    "threshold": 2026,
+    "value": "2026",
+    "label": "WORLD OCEANS DAY",
+    "scene": "Whale-girl ocean ranger and whale protecting a coral reef and a circle of small fish, sea-green and blue",
+    "asset": "festival.oceans-day.2026.png"
+  },
+  {
     "id": "festival.dragon-boat.2026",
     "name": "乘风竞渡",
     "family": "festival",
@@ -192,6 +431,26 @@
     "label": "DRAGON BOAT",
     "scene": "Whale-girl paddling a miniature dragon boat with a cute whale crew, zongzi sail",
     "asset": "festival.dragon-boat.2026.png"
+  },
+  {
+    "id": "festival.qixi.2026",
+    "name": "鹊桥鲸遇",
+    "family": "festival",
+    "threshold": 2026,
+    "value": "2026",
+    "label": "QIXI FESTIVAL",
+    "scene": "Whale-girl and whale meeting across a graceful bridge of magpies beneath two bright stars, ribbon over a starry sea",
+    "asset": "festival.qixi.2026.png"
+  },
+  {
+    "id": "festival.ghost-festival.2026",
+    "name": "河灯寄远",
+    "family": "festival",
+    "threshold": 2026,
+    "value": "2026",
+    "label": "ZHONGYUAN",
+    "scene": "Whale-girl and little whale gently placing one lotus river lantern on calm water under a soft moon, respectful remembrance, peaceful not frightening",
+    "asset": "festival.ghost-festival.2026.png"
   },
   {
     "id": "festival.mid-autumn.2026",
@@ -214,6 +473,16 @@
     "asset": "festival.national-day-cn.2026.png"
   },
   {
+    "id": "festival.double-ninth.2026",
+    "name": "登高望海",
+    "family": "festival",
+    "threshold": 2026,
+    "value": "2026",
+    "label": "DOUBLE NINTH",
+    "scene": "Whale-girl hiking a stylized coastal mountain with a whale-shaped kite, chrysanthemum blossoms and distant ocean",
+    "asset": "festival.double-ninth.2026.png"
+  },
+  {
     "id": "festival.programmer-day.2026",
     "name": "代码浪花",
     "family": "festival",
@@ -222,6 +491,46 @@
     "label": "CODE WAVES",
     "scene": "Whale-girl typing at a compact terminal with curly brackets, tiny code-shaped waves",
     "asset": "festival.programmer-day.2026.png"
+  },
+  {
+    "id": "festival.halloween.2026",
+    "name": "南瓜鲸夜",
+    "family": "festival",
+    "threshold": 2026,
+    "value": "2026",
+    "label": "HALLOWEEN",
+    "scene": "Playful whale-girl in a modest sailor witch cape holding a smiling pumpkin lantern, tiny whale wearing a star hat, no horror",
+    "asset": "festival.halloween.2026.png"
+  },
+  {
+    "id": "festival.thanksgiving.2026",
+    "name": "丰潮有你",
+    "family": "festival",
+    "threshold": 2026,
+    "value": "2026",
+    "label": "THANKSGIVING",
+    "scene": "Whale-girl offering a harvest basket with a pumpkin and wheat to her whale companion, autumn leaves, grateful friendly scene",
+    "asset": "festival.thanksgiving.2026.png"
+  },
+  {
+    "id": "festival.winter-solstice.2026",
+    "name": "冬至暖航",
+    "family": "festival",
+    "threshold": 2026,
+    "value": "2026",
+    "label": "WINTER SOLSTICE",
+    "scene": "Whale-girl in a cozy sailor scarf sharing steaming dumplings with a whale beside a snow-tipped lantern and winter waves",
+    "asset": "festival.winter-solstice.2026.png"
+  },
+  {
+    "id": "festival.christmas.2026",
+    "name": "鲸铃叮当",
+    "family": "festival",
+    "threshold": 2026,
+    "value": "2026",
+    "label": "CHRISTMAS",
+    "scene": "Whale-girl in sailor coat and festive scarf beside a tiny decorated evergreen, whale carrying a neatly wrapped present and one bell",
+    "asset": "festival.christmas.2026.png"
   },
   {
     "id": "hidden.bottle-reply",
@@ -235,24 +544,14 @@
     "existing": "05_隐藏_漂流瓶回信.png"
   },
   {
-    "id": "hidden.ocean-in-bottle",
-    "name": "瓶中海",
+    "id": "hidden.cross-host",
+    "name": "异地接头",
     "family": "hidden",
     "threshold": 0,
     "value": "FOUND",
     "label": "HIDDEN EDITION",
-    "scene": "Whale-girl astonished by a tiny bottle containing two folded oceans, neatly nested map scrolls and a whale",
-    "asset": "hidden.ocean-in-bottle.png"
-  },
-  {
-    "id": "hidden.nesting-dolls",
-    "name": "套娃没跑偏",
-    "family": "hidden",
-    "threshold": 0,
-    "value": "FOUND",
-    "label": "HIDDEN EDITION",
-    "scene": "Three original whale characters nested like matryoshka dolls, each holds a matching compass pointing the same way",
-    "asset": "hidden.nesting-dolls.png"
+    "scene": "Two identical whale-girl couriers on two islands pass a sealed task scroll over a wave bridge, playful secret-agent pose",
+    "asset": "hidden.cross-host.png"
   },
   {
     "id": "hidden.empty-hands",
@@ -265,16 +564,6 @@
     "asset": "hidden.empty-hands.png"
   },
   {
-    "id": "hidden.cross-host",
-    "name": "异地接头",
-    "family": "hidden",
-    "threshold": 0,
-    "value": "FOUND",
-    "label": "HIDDEN EDITION",
-    "scene": "Two identical whale-girl couriers on two islands pass a sealed task scroll over a wave bridge, playful secret-agent pose",
-    "asset": "hidden.cross-host.png"
-  },
-  {
     "id": "hidden.leap-day",
     "name": "闰海来客",
     "family": "hidden",
@@ -283,5 +572,25 @@
     "label": "HIDDEN EDITION",
     "scene": "Whale-girl sailor meets a tiny time-traveling whale emerging from a calendar page marked 29, orbiting ocean ring",
     "asset": "hidden.leap-day.png"
+  },
+  {
+    "id": "hidden.nesting-dolls",
+    "name": "套娃没跑偏",
+    "family": "hidden",
+    "threshold": 0,
+    "value": "FOUND",
+    "label": "HIDDEN EDITION",
+    "scene": "Three original whale characters nested like matryoshka dolls, each holds a matching compass pointing the same way",
+    "asset": "hidden.nesting-dolls.png"
+  },
+  {
+    "id": "hidden.ocean-in-bottle",
+    "name": "瓶中海",
+    "family": "hidden",
+    "threshold": 0,
+    "value": "FOUND",
+    "label": "HIDDEN EDITION",
+    "scene": "Whale-girl astonished by a tiny bottle containing two folded oceans, neatly nested map scrolls and a whale",
+    "asset": "hidden.ocean-in-bottle.png"
   }
 ]

@@ -6,7 +6,7 @@ Whale Trail for DeepSeek Harness 是一款以小鲸鱼为主题的成就徽章�
 
 *Whale Trail is a local-first achievement badge collection for DeepSeek Harness. Earn whale-themed badges automatically as you explore, build, and talk with your agent.*
 
-> **非官方社区项目，由社区成员独立开发与维护，未获 DeepSeek 官方背书。** 当前版本 **0.2.4**，已验证 **macOS / DeepSeek Harness 0.2.1-rc.2**。
+> **非官方社区项目，由社区成员独立开发与维护，未获 DeepSeek 官方背书。** 当前版本 **0.3.0**，已验证 **macOS / DeepSeek Harness 0.2.1-rc.2**。
 
 [下载与安装](#安装) · [徽章示例](#徽章示例) · [备份与迁移](#备份与迁移) · [反馈与建议](https://github.com/ShawnRen57/dsh-whale-trail/issues)
 
@@ -30,7 +30,7 @@ Whale Trail for DeepSeek Harness 是一款以小鲸鱼为主题的成就徽章�
 
 ## 徽章示例
 
-目前包含 **28 枚徽章、6 个系列**：累计使用、连续使用、Token 回响、累计对话、节日限定与隐藏典藏。
+目前包含 **59 枚徽章、6 个系列**：累计使用、连续使用、Token 回响、累计对话、节日限定与隐藏典藏。
 
 <table>
   <tr>
@@ -47,12 +47,20 @@ Whale Trail for DeepSeek Harness 是一款以小鲸鱼为主题的成就徽章�
 
 | 系列 | 当前内容 |
 | --- | --- |
-| 累计使用 | 1 / 7 / 30 / 100 天 |
-| 连续使用 | 3 / 7 / 30 / 100 天 |
-| Token 回响 | 10K / 100K / 1M / 10M |
-| 累计对话 | 1 / 10 / 50 / 200 轮 |
-| 节日限定 | 2026 元旦、春节、端午、中秋、国庆、程序员节 |
+| 累计使用 | 1 / 3 / 7 / 14 / 30 / 60 / 100 / 180 / 365 天 |
+| 连续使用 | 3 / 7 / 14 / 30 / 60 / 100 天 |
+| Token 回响 | 1M / 10M / 100M / 1B / 10B / 100B |
+| 累计对话 | 1 / 10 / 20 / 50 / 100 / 200 / 500 / 1000 轮 |
+| 节日限定 | 2026 年 24 枚：中国传统节日与国际节日，详见下方 |
 | 隐藏典藏 | 6 枚设计，4 枚可自动识别；另外 2 枚等待宿主行为证据适配后启用 |
+
+![鲸迹进阶徽章：小鲸鱼逐步成长为航海家](assets/previews/progression.png)
+
+![2026 年 24 枚节日限定徽章](assets/previews/festivals.png)
+
+节日包括元旦、腊八、情人节、除夕、春节、元宵、国际妇女节、清明、世界地球日、世界读书日、劳动节、儿童节（中国）、世界海洋日、端午、七夕、中元、中秋、国庆、重阳、程序员节、万圣节前夜、感恩节（美国）、冬至、圣诞节。以各文化节日当天为准，当前仅内置 **2026 年**；日期与地区定义见 [年度日历来源](docs/calendar-sources.md)。
+
+旧版 10K / 100K Token 徽章移除，仅展示新体系，不计入获得徽章数。真实使用记录保留，旧备份仍可导入。升级根据真实使用记录重算新增等级，已达标即可自动点亮。隐藏典藏的设计与获得条件保持不变。
 
 **徽章会持续更新。** 后续将继续带来新的主题、进阶设计、节日限定与隐藏惊喜，并随 Harness 的能力演进完善识别规则。欢迎在 [Issues](https://github.com/ShawnRen57/dsh-whale-trail/issues) 提交喜欢的主题或新的成就点子，关注 [Releases](https://github.com/ShawnRen57/dsh-whale-trail/releases) 获取更新。
 
@@ -61,17 +69,17 @@ Whale Trail for DeepSeek Harness 是一款以小鲸鱼为主题的成就徽章�
 当前发布预构建安装包，无需自行编译，也不需要配置额外模型或 API Key。
 
 1. 确认使用 **DeepSeek Harness 0.2.1-rc.2**。其他宿主版本尚未验证。
-2. 从 [v0.2.4 Release](https://github.com/ShawnRen57/dsh-whale-trail/releases/tag/v0.2.4) 下载 `dsh-whale-trail-0.2.4.tgz`。
+2. 从 [v0.3.0 Release](https://github.com/ShawnRen57/dsh-whale-trail/releases/tag/v0.3.0) 下载 `dsh-whale-trail-0.3.0.tgz`。
 3. 在终端执行以下命令，将文件路径替换为实际下载位置：
 
 ```sh
-dsh plugin --profile desktop add 'file:/绝对路径/dsh-whale-trail-0.2.4.tgz' --ignore-scripts
+dsh plugin --profile desktop add 'file:/绝对路径/dsh-whale-trail-0.3.0.tgz' --ignore-scripts
 ```
 
 macOS 上如果没有安装全局 `dsh` 命令，可以调用应用自带的 CLI：
 
 ```sh
-'/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh' plugin --profile desktop add 'file:/绝对路径/dsh-whale-trail-0.2.4.tgz' --ignore-scripts
+'/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh' plugin --profile desktop add 'file:/绝对路径/dsh-whale-trail-0.3.0.tgz' --ignore-scripts
 ```
 
 4. 重新启动 Harness，打开左下角 **用户信息 → 我的徽章**。

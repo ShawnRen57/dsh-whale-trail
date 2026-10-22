@@ -41,15 +41,34 @@ const canonical=(f:Feature)=>JSON.stringify(Object.fromEntries(Object.entries(f)
 const dayMs=86400000;
 const serial=(d:string)=>Date.parse(d+'T00:00:00Z')/dayMs;
 const dateFromSerial=(n:number)=>new Date(n*dayMs).toISOString().slice(0,10);
-const festivalDates:Record<string,string>={'new-year':'01-01','spring':'02-17','dragon-boat':'06-19','mid-autumn':'09-25','national-day-cn':'10-01','programmer-day':'10-24'};
+// Legacy identities are frozen independently of the active catalog/calendar.
+const legacyCatalog=JSON.parse(readFileSync(new URL('../assets/legacy-catalog-v2.json',import.meta.url),'utf8')) as Badge[];
+const removedBadgeIds=new Set(['tokens.10000','tokens.100000']);
+const legacyFestivalDates:Record<string,string>={'new-year':'01-01','spring':'02-17','dragon-boat':'06-19','mid-autumn':'09-25','national-day-cn':'10-01','programmer-day':'10-24'};
+const calendarFile=JSON.parse(readFileSync(new URL('../assets/calendar-2026.json',import.meta.url),'utf8')) as {version:string;timezone:string;dates:Record<string,string>;names:Record<string,string>};
+const currentCalendar={version:calendarFile.version,timezone:calendarFile.timezone,dates:calendarFile.dates,names:calendarFile.names};
+const festivalDates=currentCalendar.dates;
 const metaSchema=z.strictObject({origin:z.literal('subagent').optional(),inheritedEventCount:z.number().int().nonnegative().safe().optional(),parentSession:z.string().min(1).max(256).optional(),createdAt:z.number().int().nonnegative().safe().optional()});
 const minimalMeta=(meta:unknown)=>{const value=z.record(z.string(),z.unknown()).parse(meta);return metaSchema.parse(Object.fromEntries(Object.entries(value).filter(([key])=>['origin','inheritedEventCount','parentSession','createdAt'].includes(key))));};
 const idSchema=z.string().min(1).max(512);const integer=z.number().int().nonnegative().safe();
 const featureSchema=z.strictObject({human:z.boolean().optional(),visible:z.boolean().optional(),usage:integer.optional(),missing:z.boolean().optional(),success:z.boolean().optional(),tools:integer.optional(),name:z.string().max(512).optional(),compactionId:z.string().max(512).optional(),turn:integer.optional(),completed:z.boolean().optional()});
 const factTypes=['turn/start','turn/end','user/message','assistant/message','assistant/attempt','compaction/summary','tool/call','tool/result','request/header','compaction/end'] as const;
-const backupSchema=z.strictObject({schema:z.union([z.literal(1),z.literal(2)]),rulesVersion:z.union([z.literal(1),z.literal(2)]),calendar:z.strictObject({version:z.literal('CN-2026-v1'),dates:z.record(z.string(),z.string())}),artworkCatalogHash:z.string().regex(/^[a-f0-9]{64}$/),profile:idSchema,timezone:z.string().min(1).max(100),facts:z.array(z.strictObject({id:idSchema,session:idSchema,seq:integer,time:integer,type:z.enum(factTypes),feature:featureSchema})).max(200000),sessions:z.array(z.strictObject({id:idSchema,meta:z.string().max(2048)})).max(50000),operations:z.array(z.strictObject({id:idSchema,session:idSchema,done:z.boolean(),time:integer,clock:integer,device:idSchema,refs:z.array(idSchema).max(10000)})).max(100000),awards:z.array(z.strictObject({id:idSchema,time:integer})).max(1000)});
-const catalogHash=hash(JSON.stringify(catalog.map(({id,family,threshold})=>({id,family,threshold}))));
-const legacyCatalogHash=hash(JSON.stringify(catalog.map(({id,family,threshold})=>({id:family==='dialogues'?id.replace('dialogues.','tasks.'):id,family:family==='dialogues'?'tasks':family,threshold}))));
+const calendarSchema=z.union([
+ z.strictObject({version:z.literal('CN-2026-v1'),dates:z.record(z.string(),z.string())}),
+ z.strictObject({version:z.literal('CN-GLOBAL-2026-v2'),timezone:z.literal('Asia/Shanghai'),dates:z.record(z.string(),z.string().regex(/^\d{4}-\d{2}-\d{2}$/)),names:z.record(z.string(),z.string())})
+]);
+const backupSchema=z.strictObject({schema:z.union([z.literal(1),z.literal(2),z.literal(3)]),rulesVersion:z.union([z.literal(1),z.literal(2),z.literal(3)]),calendar:calendarSchema,artworkCatalogHash:z.string().regex(/^[a-f0-9]{64}$/),profile:idSchema,timezone:z.string().min(1).max(100),facts:z.array(z.strictObject({id:idSchema,session:idSchema,seq:integer,time:integer,type:z.enum(factTypes),feature:featureSchema})).max(200000),sessions:z.array(z.strictObject({id:idSchema,meta:z.string().max(2048)})).max(50000),operations:z.array(z.strictObject({id:idSchema,session:idSchema,done:z.boolean(),time:integer,clock:integer,device:idSchema,refs:z.array(idSchema).max(10000)})).max(100000),awards:z.array(z.strictObject({id:idSchema,time:integer})).max(1000)});
+const identity=(badges:Badge[])=>hash(JSON.stringify(badges.map(({id,family,threshold})=>({id,family,threshold}))));
+const catalogHash=identity(catalog);
+const v2CatalogHash=identity(legacyCatalog);
+const v1Catalog=legacyCatalog.map(b=>({...b,id:b.family==='dialogues'?b.id.replace('dialogues.','tasks.'):b.id,family:b.family==='dialogues'?'tasks':b.family}));
+const v1CatalogHash=identity(v1Catalog);
+const equalMetadata=(a:unknown,b:unknown):boolean=>{
+ if(a===b)return true;
+ if(!a||!b||typeof a!=='object'||typeof b!=='object'||Array.isArray(a)||Array.isArray(b))return false;
+ const left=a as Record<string,unknown>,right=b as Record<string,unknown>,keys=Object.keys(left);
+ return keys.length===Object.keys(right).length&&keys.every(k=>Object.hasOwn(right,k)&&equalMetadata(left[k],right[k]));
+};
 /** Only the new closure flag may enrich legacy evidence; all known facts remain immutable. */
 function mergeFeature(type:string,a:Feature,b:Feature):Feature {const {completed:x,...old}=a,{completed:y,...next}=b;
  if(canonical(old)!==canonical(next)||(x!==undefined&&y!==undefined&&x!==y)||(type!=='turn/end'&&(x!==undefined||y!==undefined)))throw new Error('canonical fact conflict');
@@ -68,9 +87,17 @@ export class Engine {
   if(!this.db.prepare('PRAGMA table_info(operations)').all().some(c=>c.name==='refs'))this.db.exec("ALTER TABLE operations ADD COLUMN refs TEXT NOT NULL DEFAULT '[]'");
   const stored=this.config('profile');if(stored&&stored!==options.profileId)throw new Error('profile mismatch');
   const zone=this.config('timezone');if(zone&&zone!==options.timezone)throw new Error('timezone conflict; export before migration');
-  if(this.config('rulesVersion')!=='2'){
-   if(existed&&Number(this.db.prepare('SELECT COUNT(*) AS n FROM facts').get()?.n)>0){const folder=join(dirname(file),'backups');mkdirSync(folder,{recursive:true,mode:0o700});const backup=join(folder,'before-rules-v2-'+Date.now()+'-'+randomUUID()+'.sqlite');this.db.prepare('VACUUM INTO ?').run(backup);chmodSync(backup,0o600);}
-   this.db.exec('BEGIN IMMEDIATE');try{this.db.exec("DELETE FROM awards WHERE id LIKE 'tasks.%' OR id LIKE 'hidden.%'");this.setConfig('rulesVersion','2');this.db.exec('COMMIT');}catch(error){this.db.exec('ROLLBACK');throw error;}
+  const version=this.config('rulesVersion');
+  if(version!==undefined&&!['1','2','3'].includes(version))throw new Error('unsupported ledger rules version');
+  const obsoleteGrants=this.db.prepare("SELECT COUNT(*) n FROM awards WHERE id IN ('tokens.10000','tokens.100000')").get()?.n;
+  if(version!=='3'||obsoleteGrants){
+   // Snapshot before changing any version or catalog-dependent grant state, including empty v2 ledgers.
+   if(existed){const folder=join(dirname(file),'backups');mkdirSync(folder,{recursive:true,mode:0o700});const backup=join(folder,(version==='3'?'before-catalog-v3-':'before-rules-v3-')+Date.now()+'-'+randomUUID()+'.sqlite');this.db.prepare('VACUUM INTO ?').run(backup);chmodSync(backup,0o600);}
+   this.db.exec('BEGIN IMMEDIATE');try{
+    if(version!=='2'&&version!=='3')this.db.exec("DELETE FROM awards WHERE id LIKE 'tasks.%' OR id LIKE 'hidden.%'");
+    for(const id of removedBadgeIds)this.db.prepare('DELETE FROM awards WHERE id=?').run(id);
+    this.setConfig('rulesVersion','3');this.db.exec('COMMIT');
+   }catch(error){this.db.exec('ROLLBACK');throw error;}
   }
   this.setConfig('profile',options.profileId);this.setConfig('timezone',options.timezone);this.deviceId=this.config('device')??randomUUID();this.setConfig('device',this.deviceId);
  }
@@ -98,6 +125,8 @@ export class Engine {
  }
  /** Redacted browser projection: locked hidden artwork and rules are absent. */
  view():LedgerView {
+  // Repeated historical scans share civil-date conversions within one immutable evidence view.
+  const dateCache=new Map<number,string>();const localDate=(time:number):string=>{let value=dateCache.get(time);if(value===undefined){value=this.date(time);dateCache.set(time,value);}return value;};
   const facts=this.facts();const metas=new Map((this.db.prepare('SELECT * FROM sessions').all() as unknown as {id:string;meta:string}[]).map(s=>[s.id,JSON.parse(s.meta) as Meta]));
   const active=new Map<string,number>();const interactions=new Map<string,Fact[]>();const sessions=new Map<string,Fact[]>();let tokens=0,missingUsage=0;
   const warnings:string[]=[];let future=false,legacyClosure=false;const rounds:Round[]=[];
@@ -119,7 +148,7 @@ export class Engine {
     if(f.type==='user/message'&&f.feature.human&&!isChild)pending.push(f);
     if(pending.length&&(f.feature.visible||f.type==='tool/result'&&f.feature.success)){
      for(const input of pending){if(input.time>this.now()+300000){future=true;continue;}
-     const d=this.date(input.time);active.set(d,Math.min(active.get(d)??Infinity,f.time));
+     const d=localDate(input.time);active.set(d,Math.min(active.get(d)??Infinity,f.time));
      const a=interactions.get(id)??[];if(!a.some(v=>v.id===input.id))a.push(input);interactions.set(id,a);}pending=[];
     }
    }
@@ -131,7 +160,7 @@ export class Engine {
   let segment:number[]=[];const thresholds=catalog.filter(a=>a.family==='streak').map(a=>a.threshold);const maxWindow=Math.max(...thresholds);
   for(const d of dates){const n=serial(d);if(n!==previous+1)segment=[];run=n===previous+1?run+1:1;previous=n;bestStreak=Math.max(bestStreak,run);segment.push(active.get(d)!);if(segment.length>maxWindow)segment.shift();for(const threshold of thresholds)if(run>=threshold){const at=Math.max(...segment.slice(-threshold));streakTimes.set(threshold,Math.min(streakTimes.get(threshold)??Infinity,at));}}
   const dayProofTimes=[...active.values()].sort((a,b)=>a-b);
-  const today=serial(this.date(this.now()));let streak=0;if(previous>=today-1&&previous<=today){let n=previous;const set=new Set(dates);while(set.has(dateFromSerial(n--)))streak++;}
+  const today=serial(localDate(this.now()));let streak=0;if(previous>=today-1&&previous<=today){let n=previous;const set=new Set(dates);while(set.has(dateFromSerial(n--)))streak++;}
   const qualified=new Map<string,number>();
   const award=(id:string,time:number)=>qualified.set(id,Math.min(qualified.get(id)??Infinity,time));
   for(const a of catalog){let at:number|undefined;
@@ -139,20 +168,20 @@ export class Engine {
    if(a.family==='streak'&&bestStreak>=a.threshold)at=streakTimes.get(a.threshold);
    if(a.family==='tokens'&&tokens>=a.threshold){let n=0;at=facts.find(f=>(n+=f.feature.usage??0)>=a.threshold)?.time;}
    if(a.family==='dialogues'&&rounds.length>=a.threshold)at=rounds[a.threshold-1]?.time;
-   if(a.family==='festival'){const key=a.id.split('.')[1]!;const d='2026-'+festivalDates[key];if(active.has(d))at=active.get(d);}
+   if(a.family==='festival'){const key=a.id.split('.')[1]!;const d=festivalDates[key];if(active.has(d))at=active.get(d);}
    if(at!==undefined)qualified.set(a.id,at);
   }
   for(const round of rounds){const list=(sessions.get(round.session)??[]).filter(f=>f.seq<=round.endSeq);const humans=list.filter(f=>f.type==='user/message'&&f.feature.human);
    const priorRounds=rounds.filter(r=>r.session===round.session&&r.endSeq<=round.endSeq);const completedHumans=priorRounds.flatMap(r=>r.inputs);
    const born=metas.get(round.session)?.createdAt;
-   if(born!==undefined&&round.inputs.some(h=>{const d=this.date(h.time);return d.endsWith('-02-29')&&this.date(born)===d&&this.date(round.time)===d;}))award('hidden.leap-day',round.time);
+   if(born!==undefined&&round.inputs.some(h=>{const d=localDate(h.time);return d.endsWith('-02-29')&&localDate(born)===d&&localDate(round.time)===d;}))award('hidden.leap-day',round.time);
    const compactions=list.filter(f=>f.type==='compaction/end'&&f.feature.success&&f.feature.compactionId);const ids=new Set(compactions.map(c=>c.feature.compactionId));
    if(ids.size>=2&&compactions.some((c,i)=>compactions.slice(i+1).some(n=>n.feature.compactionId!==c.feature.compactionId&&humans.some(h=>h.seq>c.seq&&h.seq<n.seq))))award('hidden.ocean-in-bottle',round.time);
-   if(humans.some((h,i)=>{if(!i||!round.inputs.some(v=>v.id===h.id))return false;const gap=serial(this.date(h.time))-serial(this.date(humans[i-1]!.time));const delay=serial(this.date(round.time))-serial(this.date(h.time));return gap>=31&&delay>=0&&delay<=6;}))award('hidden.bottle-reply',round.time);
+   if(humans.some((h,i)=>{if(!i||!round.inputs.some(v=>v.id===h.id))return false;const gap=serial(localDate(h.time))-serial(localDate(humans[i-1]!.time));const delay=serial(localDate(round.time))-serial(localDate(h.time));return gap>=31&&delay>=0&&delay<=6;}))award('hidden.bottle-reply',round.time);
    // Child relationships must be known; missing tool evidence never means zero tools.
    const child=[...metas.values()].some(m=>m.origin==='subagent'&&m.parentSession===round.session);
    const header=list.find(f=>f.type==='request/header'&&f.feature.tools!==undefined);
-   if(!child&&priorRounds.length>=3&&new Set(completedHumans.map(h=>this.date(h.time))).size>=2&&(header?.feature.tools??0)>=5&&!list.some(f=>f.type==='tool/call'&&!String(f.feature.name).startsWith('whale_trail')))award('hidden.empty-hands',round.time);
+   if(!child&&priorRounds.length>=3&&new Set(completedHumans.map(h=>localDate(h.time))).size>=2&&(header?.feature.tools??0)>=5&&!list.some(f=>f.type==='tool/call'&&!String(f.feature.name).startsWith('whale_trail')))award('hidden.empty-hands',round.time);
   }
   const earned:BadgeView[]=[],unearned:BadgeView[]=[];
   for(const badge of catalog){const {id,name,family,threshold,value,label,asset}=badge;const a={id,name,family,threshold,value,label,asset};const at=qualified.get(id);
@@ -162,7 +191,7 @@ export class Engine {
   earned.sort((a,b)=>(b.achievedAt??0)-(a.achievedAt??0)||a.id.localeCompare(b.id));
   return {earned,unearned,activeDates:dates,metrics:{days:dates.length,streak,bestStreak,tokens,dialogues:rounds.length,missingUsage},timezone:this.options.timezone,warnings};
  }
- private how(a:Badge):string {switch(a.family){case 'days':return `累计在 ${a.threshold} 个自然日有效使用 DeepSeek Harness。`;case 'streak':return `连续 ${a.threshold} 个自然日有效使用 DeepSeek Harness。`;case 'tokens':return `累计获得完整用量记录的 Token 达到 ${a.threshold.toLocaleString('en-US')}。`;case 'dialogues':return `累计完成 ${a.threshold} 轮有效对话：你发起一次输入，Agent 完成对应回复，自动计 1 轮。`;default:return `在 ${a.threshold} 年${({ 'new-year':'元旦（1月1日）',spring:'春节（正月初一）','dragon-boat':'端午（五月初五）','mid-autumn':'中秋（八月十五）','national-day-cn':'国庆（10月1日）','programmer-day':'程序员节（10月24日）'} as Record<string,string>)[a.id.split('.')[1]!]}有效使用一次。`;}}
+ private how(a:Badge):string {switch(a.family){case 'days':return `累计在 ${a.threshold} 个自然日有效使用 DeepSeek Harness。`;case 'streak':return `连续 ${a.threshold} 个自然日有效使用 DeepSeek Harness。`;case 'tokens':return `累计获得完整用量记录的 Token 达到 ${a.threshold.toLocaleString('en-US')}。`;case 'dialogues':return `累计完成 ${a.threshold} 轮有效对话：你发起一次输入，Agent 完成对应回复，自动计 1 轮。`;default:{const key=a.id.split('.')[1]!;return `在 ${festivalDates[key]} ${currentCalendar.names[key]}有效使用一次。`;}}}
  /** Validate a merge in an isolated temporary database before presenting counts. */
  inspect(text:string):MergePreview {const folder=mkdtempSync(join(tmpdir(),'whale-trail-merge-'));let stage:Engine|undefined;try{
   stage=new Engine(join(folder,'ledger.sqlite'),this.options);stage.import(this.export());const before=stage.view();const facts=Number(stage.db.prepare('SELECT COUNT(*) AS n FROM facts').get()?.n);
@@ -173,21 +202,25 @@ export class Engine {
   return {newFacts:added,duplicateFacts:incoming.facts.length-added,enrichedFacts:enriched,legacy:incoming.rulesVersion===1,earnedBefore:before.earned.length,earnedAfter:after.earned.length};
  }finally{stage?.close();rmSync(folder,{recursive:true,force:true});}}
  /** One transaction yields a portable fact package; legacy manual operations are never exported. */
- export():string {this.view();this.db.exec('BEGIN');try{const payload=JSON.stringify({schema:2,rulesVersion:2,calendar:{version:'CN-2026-v1',dates:festivalDates},artworkCatalogHash:catalogHash,profile:this.options.profileId,timezone:this.options.timezone,facts:this.facts(),sessions:this.backupSessions(),operations:[],awards:this.db.prepare('SELECT * FROM awards').all()});this.db.exec('COMMIT');return JSON.stringify({format:'dshbadge',checksum:hash(payload),payload});}catch(error){this.db.exec('ROLLBACK');throw error;}}
+ export():string {this.view();this.db.exec('BEGIN');try{const payload=JSON.stringify({schema:3,rulesVersion:3,calendar:currentCalendar,artworkCatalogHash:catalogHash,profile:this.options.profileId,timezone:this.options.timezone,facts:this.facts(),sessions:this.backupSessions(),operations:[],awards:this.db.prepare('SELECT * FROM awards').all()});this.db.exec('COMMIT');return JSON.stringify({format:'dshbadge',checksum:hash(payload),payload});}catch(error){this.db.exec('ROLLBACK');throw error;}}
  /** Import evidence only. V1 manual operations and task/hidden award caches cannot grant anything. */
  import(text:string):LedgerView {
-  if(text.length>50*1024*1024)throw new Error('backup too large');const box=obj(JSON.parse(text));
+  if(text.length>50*1024*1024)throw new Error('backup too large');const box=z.strictObject({format:z.literal('dshbadge'),checksum:z.string(),payload:z.string()}).parse(JSON.parse(text));
   if(box.format!=='dshbadge'||typeof box.payload!=='string'||hash(box.payload)!==box.checksum)throw new Error('backup checksum mismatch');
   const data=backupSchema.parse(JSON.parse(box.payload));const legacy=data.rulesVersion===1;
-  if(data.schema!==data.rulesVersion||data.profile!==this.options.profileId||data.timezone!==this.options.timezone||canonical(data.calendar.dates as unknown as Feature)!==canonical(festivalDates as unknown as Feature)||data.artworkCatalogHash!==(legacy?legacyCatalogHash:catalogHash))throw new Error('backup profile, timezone or rules mismatch');
+  const expectedCalendar=data.rulesVersion===3?currentCalendar:{version:'CN-2026-v1',dates:legacyFestivalDates};
+  const expectedHash=data.rulesVersion===1?v1CatalogHash:data.rulesVersion===2?v2CatalogHash:catalogHash;
+  if(data.schema!==data.rulesVersion||data.profile!==this.options.profileId||data.timezone!==this.options.timezone||!equalMetadata(data.calendar,expectedCalendar)||data.artworkCatalogHash!==expectedHash)throw new Error('backup profile, timezone or rules mismatch');
   if(!legacy&&data.operations.length)throw new Error('manual operations are not supported');
+  const sourceCatalog=data.rulesVersion===1?v1Catalog:data.rulesVersion===2?legacyCatalog:catalog;
+  for(const award of data.awards)if(!sourceCatalog.some(b=>b.id===award.id))throw new Error('invalid award');
   this.db.exec('BEGIN IMMEDIATE');try{
    for(const s of data.sessions){const m=metaSchema.parse(JSON.parse(s.meta));const existing=this.db.prepare('SELECT meta FROM sessions WHERE id=?').get(s.id) as {meta:string}|undefined;if(existing){const old=minimalMeta(JSON.parse(existing.meta));for(const key of Object.keys(m) as (keyof typeof m)[])if(old[key]!==undefined&&old[key]!==m[key])throw new Error('session metadata conflict');this.db.prepare('UPDATE sessions SET meta=? WHERE id=?').run(JSON.stringify({...old,...m}),s.id);}else this.db.prepare('INSERT INTO sessions VALUES (?,?)').run(s.id,JSON.stringify(m));}
    for(const f of data.facts)this.admitFact(f);
-   for(const a of data.awards){const entry=catalog.find(c=>c.id===a.id);const retired=legacy&&/^tasks\.(1|10|50|200)$/.test(a.id);
-    if(!entry&&!retired)throw new Error('invalid award');
-    // New dialogue and hidden timestamps are proved from rounds, never from a cache.
-    if(retired||entry?.family==='hidden'||entry?.family==='dialogues')continue;
+   for(const a of data.awards){const entry=sourceCatalog.find(c=>c.id===a.id)!;
+    // V1 confirmations and cached dialogue/hidden awards never substitute for completed-round proof.
+    if(entry.family==='tasks'||entry.family==='hidden'||entry.family==='dialogues')continue;
+    if(removedBadgeIds.has(a.id))continue;
     this.db.prepare('INSERT INTO awards VALUES (?,?) ON CONFLICT(id) DO UPDATE SET time=MIN(time,excluded.time)').run(a.id,a.time);
    }
    const view=this.view();this.db.exec('COMMIT');return view;

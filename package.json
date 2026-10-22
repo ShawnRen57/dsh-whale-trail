@@ -1,6 +1,6 @@
 {
   "name": "dsh-whale-trail",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "description": "Whale Trail · 鲸迹 — automatic local achievement badges for DeepSeek Harness",
   "type": "module",
   "license": "UNLICENSED",
@@ -21,6 +21,8 @@
     "lib/typert.js",
     "lib/build-info.json",
     "assets/catalog.json",
+    "assets/calendar-2026.json",
+    "assets/legacy-catalog-v2.json",
     "assets/web",
     "README.md",
     "cordis.patch.yml",
