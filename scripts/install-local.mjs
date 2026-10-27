@@ -8,5 +8,5 @@ const files=['package.json','pnpm-lock.yaml','pnpm-workspace.yaml','cordis.patch
 for(const file of files)if(existsSync(join(root,file))){copyFileSync(join(root,file),join(backup,file));chmodSync(join(backup,file),0o600);copied.push(file);}
 writeFileSync(join(backup,'manifest.json'),JSON.stringify({profile,files:copied,createdAt:new Date().toISOString()},null,2)+'\n',{mode:0o600});
 console.log('Profile configuration backup:',backup);
-const cli=process.env.DSH_WHALE_TRAIL_CLI??'/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh';const result=spawnSync(cli,['plugin','--profile',profile,'add','file:'+resolve(process.argv[3]??'dsh-whale-trail-0.3.0.tgz'),'--ignore-scripts'],{stdio:'inherit'});process.exitCode=result.status??1;
+const cli=process.env.DSH_WHALE_TRAIL_CLI??'/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh';const result=spawnSync(cli,['plugin','--profile',profile,'add','file:'+resolve(process.argv[3]??'dsh-whale-trail-1.0.0.tgz'),'--ignore-scripts'],{stdio:'inherit'});process.exitCode=result.status??1;
 for(const name of existing){const ignored=join(modules,'.ignored',name),target=join(modules,name);if(existsSync(ignored)&&!existsSync(target)){mkdirSync(join(target,'..'),{recursive:true});renameSync(ignored,target);console.log('Preserved existing local package:',name);}}

@@ -18,11 +18,11 @@ for(const b of catalog){
  }
  checks.push({id:b.id,width:m.width,height:m.height,alpha:m.hasAlpha});
 }
-const names={days:'累计使用 · 从初潜到环球航海',streak:'连续使用 · 从信标到灯塔群',tokens:'Token 回响 · 从深海到鲸宇',dialogues:'累计对话 · 从初声到千轮鲸鸣',festival:'2026 节日限定 · 24 个相逢的日子',hidden:'隐藏典藏 · 仅供物料审阅'};
+const names={days:'累计使用 · 从初潜到环球航海',streak:'连续使用 · 从信标到灯塔群',tokens:'Token 回响 · 从深海到鲸宇',dialogues:'累计对话 · 从初声到千轮鲸鸣',festival:'2026 节日限定 · 24 个相逢的日子',exploration:'探索航迹 · 多样工具与长期协作',hidden:'隐藏典藏 · 仅供物料审阅'};
 const escape=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
 async function sheet(path,title,groups){
  const columns=6,tile=280,width=1800,overlays=[];let y=154;
- let svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="HEIGHT"><rect width="100%" height="100%" fill="#f8f6ef"/><g font-family="Arial Unicode MS, sans-serif" fill="#182b47"><text x="60" y="66" font-size="34" font-weight="bold">${escape(title)}</text><text x="60" y="108" font-size="19">Whale Trail · 圆形印章 / 固定数值牌 / 场景进阶 · v0.3.0</text>`;
+ let svg=`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="HEIGHT"><rect width="100%" height="100%" fill="#f8f6ef"/><g font-family="Arial Unicode MS, sans-serif" fill="#182b47"><text x="60" y="66" font-size="34" font-weight="bold">${escape(title)}</text><text x="60" y="108" font-size="19">Whale Trail · 圆形印章 / 固定数值牌 / 场景进阶 · v1.0.0</text>`;
  for(const [heading,badges] of groups){
   svg+=`<text x="60" y="${y}" font-size="24" font-weight="bold">${escape(heading)}</text><line x1="60" x2="1740" y1="${y+18}" y2="${y+18}" stroke="#ddd8cd"/>`;
   for(const [i,b]of badges.entries()){
@@ -35,9 +35,9 @@ async function sheet(path,title,groups){
  svg+='</g></svg>';
  await sharp(Buffer.from(svg.replace('HEIGHT',String(y+25)))).composite(overlays).png().toFile(path);
 }
-await sheet('assets/全量59枚徽章_审阅总览.png','DSH 鲸迹 · 59 枚徽章',Object.keys(names).map(f=>[names[f],catalog.filter(b=>b.family===f)]));
+await sheet('assets/全量67枚徽章_审阅总览.png','DSH 鲸迹 · 67 枚徽章',Object.keys(names).map(f=>[names[f],catalog.filter(b=>b.family===f)]));
 await sheet('assets/previews/progression.png','航迹进阶 · 29 枚成长徽章',['days','streak','tokens','dialogues'].map(f=>[names[f],catalog.filter(b=>b.family===f)]));
 await sheet('assets/previews/festivals.png',names.festival,[[names.festival,catalog.filter(b=>b.family==='festival')]]);
-for(const f of ['days','streak','tokens','dialogues'])await sheet('assets/previews/'+f+'.png',names[f],[[names[f],catalog.filter(b=>b.family===f)]]);
+for(const f of ['days','streak','tokens','dialogues','exploration'])await sheet('assets/previews/'+f+'.png',names[f],[[names[f],catalog.filter(b=>b.family===f)]]);
 await writeFile('qa/materials.json',JSON.stringify(checks,null,2)+'\n');
 console.log(`${catalog.length} active, ${checks.length} transparent originals and exports; dynamic contact sheets ready`);

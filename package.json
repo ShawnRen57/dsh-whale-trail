@@ -1,7 +1,7 @@
 {
   "name": "dsh-whale-trail",
-  "version": "0.3.0",
-  "description": "Whale Trail · 鲸迹 — automatic local achievement badges for DeepSeek Harness",
+  "version": "1.0.0",
+  "description": "Whale Trail · 鲸迹 — local achievements, voyage collection, ASCII aquarium and shareable cards for DeepSeek Harness",
   "type": "module",
   "license": "UNLICENSED",
   "main": "lib/index.js",
@@ -26,7 +26,10 @@
     "assets/web",
     "README.md",
     "cordis.patch.yml",
-    "docs/images"
+    "docs/images",
+    "assets/brand",
+    "assets/legacy-catalog-v3.json",
+    "THIRD_PARTY_NOTICES.md"
   ],
   "dsh": {
     "client": {
@@ -42,8 +45,8 @@
     }
   },
   "peerDependencies": {
-    "@deepseek-ai/cordis": "4.0.5",
-    "@deepseek-ai/dsh-typert-protocol": "0.2.1-rc.2",
+    "@deepseek-ai/cordis": "^4.0.5",
+    "@deepseek-ai/dsh-typert-protocol": "*",
     "@deepseek-ai/schemastery": "*"
   },
   "scripts": {
@@ -63,8 +66,7 @@
     "typescript": "^5.9.3"
   },
   "engines": {
-    "node": ">=24",
-    "dsh": "0.2.1-rc.2"
+    "node": ">=24"
   },
   "dependencies": {
     "zod": "4.4.3"

@@ -82,7 +82,7 @@ test('a conflicting known completion status rejects an entire backup atomically'
  const a=make();a.ingest('s',round());const b=make();b.import(a.export());const before=b.export();const bad=changeBackup(a.export(),p=>{p.facts.find(f=>f.type==='turn/end').feature.completed=false;p.sessions.push({id:'added-before-conflict',meta:'{}'});});assert.throws(()=>b.import(bad),/canonical fact conflict/);assert.equal(b.export(),before);a.close();b.close();
 });
 test('backup contains versioned rules, calendar and artwork catalog identity',()=>{
- const e=make();const p=JSON.parse(JSON.parse(e.export()).payload);assert.equal(p.schema,3);assert.equal(p.rulesVersion,3);assert.equal(p.calendar.version,'CN-GLOBAL-2026-v2');assert.match(p.artworkCatalogHash,/^[a-f0-9]{64}$/);e.close();
+ const e=make();const p=JSON.parse(JSON.parse(e.export()).payload);assert.equal(p.schema,4);assert.equal(p.rulesVersion,4);assert.equal(p.calendar.version,'CN-GLOBAL-2026-v2');assert.match(p.artworkCatalogHash,/^[a-f0-9]{64}$/);e.close();
 });
 test('backup inspection previews fact union without mutating the current ledger',()=>{
  const e=make(),other=make();other.ingest('s',[human(),answer()]);const preview=e.inspect(other.export());assert.equal(preview.newFacts,2);assert.equal(e.view().metrics.days,0);e.import(other.export());assert.equal(e.inspect(other.export()).newFacts,0);e.close();other.close();

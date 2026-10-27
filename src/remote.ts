@@ -3,6 +3,7 @@ import {z} from 'zod';
 import {createTypertRemoteInfo} from '@deepseek-ai/dsh-typert-protocol/remote-info';
 export const requestSchema=z.discriminatedUnion('type',[
  z.strictObject({type:z.literal('snapshot')}),
+ z.strictObject({type:z.literal('preferences'),preferences:z.unknown()}),
  z.strictObject({type:z.literal('backup')}),
  z.strictObject({type:z.literal('inspect'),text:z.string().max(50*1024*1024)}),
  z.strictObject({type:z.literal('restore'),text:z.string().max(50*1024*1024)}),

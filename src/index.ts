@@ -31,10 +31,10 @@ export class WhaleTrail extends TypertRemoteService {
  private async scan(ctx:HostContext):Promise<void>{const result=await scanHistory(ctx.sessionPersistence,(id,events,meta)=>this.engine.ingest(id,events,meta),()=>this.stopped);this.historyErrors=result.failures;}
  private async snapshot(){if(this.writeError)throw this.writeError;const view=this.engine.view();if(this.historyErrors)view.warnings.push('history');const art:Record<string,string>={};for(const b of [...view.earned,...view.unearned]){
   if(b.asset==='hidden-placeholder.svg')continue;let image=this.art.get(b.id);if(!image){const bytes=readFileSync(new URL('../assets/web/'+b.id+'.webp',import.meta.url));image='data:image/webp;base64,'+bytes.toString('base64');this.art.set(b.id,image);}art[b.id]=image;
- }return {...view,art};}
+ }return {...view,art,preferences:this.engine.preferences()};}
  /** Read/export/merge commands only; badge progress has no manual mutation endpoint. */
  @Remote
- async request(request:Request):Promise<unknown>{await this.ready;if(this.stopped)throw new Error('whale-trail: disposed');const r=requestSchema.parse(request);switch(r.type){case 'snapshot':return {type:'view',data:await this.snapshot()};case 'backup':return {type:'backup',text:this.engine.export()};case 'inspect':return {type:'preview',preview:this.engine.inspect(r.text)};case 'restore':{
+ async request(request:Request):Promise<unknown>{await this.ready;if(this.stopped)throw new Error('whale-trail: disposed');const r=requestSchema.parse(request);switch(r.type){case 'snapshot':return {type:'view',data:await this.snapshot()};case 'preferences':{this.engine.setPreferences(r.preferences);return {type:'view',data:await this.snapshot()};}case 'backup':return {type:'backup',text:this.engine.export()};case 'inspect':return {type:'preview',preview:this.engine.inspect(r.text)};case 'restore':{
   this.engine.inspect(r.text);const folder=join(dirname(this.engine.file),'backups');mkdirSync(folder,{recursive:true,mode:0o700});const file=join(folder,'before-merge-'+Date.now()+'-'+randomUUID()+'.dshbadge');writeFileSync(file+'.tmp',this.engine.export(),{mode:0o600,flag:'wx'});renameSync(file+'.tmp',file);this.engine.import(r.text);return {type:'view',data:await this.snapshot()};
  }}}
 }

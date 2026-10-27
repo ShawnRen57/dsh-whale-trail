@@ -592,5 +592,85 @@
     "label": "HIDDEN EDITION",
     "scene": "Whale-girl astonished by a tiny bottle containing two folded oceans, neatly nested map scrolls and a whale",
     "asset": "hidden.ocean-in-bottle.png"
+  },
+  {
+    "id": "exploration.tools.1",
+    "name": "初试罗盘",
+    "family": "exploration",
+    "threshold": 1,
+    "value": "1",
+    "label": "EXPLORATION",
+    "scene": "Original whale explorer with nautical compass, matching the existing hand-carved postage-stamp style",
+    "asset": "exploration.tools.1.png"
+  },
+  {
+    "id": "exploration.tools.3",
+    "name": "三向探航",
+    "family": "exploration",
+    "threshold": 3,
+    "value": "3",
+    "label": "EXPLORATION",
+    "scene": "Original whale explorer with nautical compass, matching the existing hand-carved postage-stamp style",
+    "asset": "exploration.tools.3.png"
+  },
+  {
+    "id": "exploration.tools.8",
+    "name": "八方共鸣",
+    "family": "exploration",
+    "threshold": 8,
+    "value": "8",
+    "label": "EXPLORATION",
+    "scene": "Original whale explorer with nautical compass, matching the existing hand-carved postage-stamp style",
+    "asset": "exploration.tools.8.png"
+  },
+  {
+    "id": "exploration.sessions.3",
+    "name": "三港相逢",
+    "family": "exploration",
+    "threshold": 3,
+    "value": "3",
+    "label": "EXPLORATION",
+    "scene": "Original whale explorer with nautical compass, matching the existing hand-carved postage-stamp style",
+    "asset": "exploration.sessions.3.png"
+  },
+  {
+    "id": "exploration.sessions.10",
+    "name": "十港航迹",
+    "family": "exploration",
+    "threshold": 10,
+    "value": "10",
+    "label": "EXPLORATION",
+    "scene": "Original whale explorer with nautical compass, matching the existing hand-carved postage-stamp style",
+    "asset": "exploration.sessions.10.png"
+  },
+  {
+    "id": "exploration.revisit.3",
+    "name": "三日续航",
+    "family": "exploration",
+    "threshold": 3,
+    "value": "3D",
+    "label": "EXPLORATION",
+    "scene": "Original whale explorer with nautical compass, matching the existing hand-carved postage-stamp style",
+    "asset": "exploration.revisit.3.png"
+  },
+  {
+    "id": "exploration.revisit.7",
+    "name": "七日重访",
+    "family": "exploration",
+    "threshold": 7,
+    "value": "7D",
+    "label": "EXPLORATION",
+    "scene": "Original whale explorer with nautical compass, matching the existing hand-carved postage-stamp style",
+    "asset": "exploration.revisit.7.png"
+  },
+  {
+    "id": "exploration.compaction.1",
+    "name": "轻装再航",
+    "family": "exploration",
+    "threshold": 1,
+    "value": "1",
+    "label": "EXPLORATION",
+    "scene": "Original whale explorer with nautical compass, matching the existing hand-carved postage-stamp style",
+    "asset": "exploration.compaction.1.png"
   }
 ]
