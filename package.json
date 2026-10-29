@@ -1,6 +1,6 @@
 {
   "name": "dsh-whale-trail",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Whale Trail · 鲸迹 — local achievements, voyage collection, ASCII aquarium and shareable cards for DeepSeek Harness",
   "type": "module",
   "license": "UNLICENSED",
@@ -29,7 +29,9 @@
     "docs/images",
     "assets/brand",
     "assets/legacy-catalog-v3.json",
-    "THIRD_PARTY_NOTICES.md"
+    "THIRD_PARTY_NOTICES.md",
+    "assets/collection",
+    "docs/art"
   ],
   "dsh": {
     "client": {

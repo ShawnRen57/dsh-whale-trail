@@ -42,3 +42,12 @@
 .wt-badge-picker{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.wt-badge-picker button{position:relative;min-width:0;padding:8px 6px 10px;border-color:transparent}.wt-badge-picker img{display:block;width:100%;aspect-ratio:1;object-fit:contain;margin-bottom:7px}.wt-badge-picker span{display:block;font-size:10px}.wt-badge-picker b{position:absolute;right:4px;top:4px;display:grid;place-items:center;width:18px;height:18px;border-radius:50%;color:white;background:#547eb8;font:10px ui-monospace,monospace}.wt-badge-picker button[aria-pressed=true]{border-color:#8eabc9;background:#f4f8fc}.wt-badge-picker button:disabled{cursor:default}
 .wt-share-actions{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0 14px}.wt-share-actions button{font-size:12px}.wt-brand-note{font-size:10px;line-height:1.6;color:#8998a8}.wt-editor-message{font-size:12px;color:#52799a;min-height:18px}
 @media(max-width:560px){.wt-tabs{gap:18px;padding:0 20px;overflow:auto}.wt-tabs button{font-size:12px}.wt-tab-intro h2{font-size:19px}.wt-chapter{gap:10px}.wt-chapter-no{width:30px;font-size:19px}.wt-chapter-progress{grid-template-columns:1fr;gap:12px}.wt-reward-row{grid-template-columns:repeat(2,minmax(0,1fr))}.wt-decor-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.wt-editor-controls{grid-template-columns:1fr}.wt-badge-picker{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* Approved flat-sticker collection: warm display ground, transparent anatomy-based artwork. */
+.wt-decor-portrait{display:block;width:100%;height:116px;object-fit:contain;margin:0 auto;pointer-events:none}
+.wt-mini-reward{background:#fbf7ee;padding:5px 4px 10px;border-radius:9px}
+.wt-mini-reward .wt-decor-portrait{height:92px}.wt-mini-reward>span{color:#172d49;line-height:1.5;margin-top:4px}
+.wt-panel .wt-decor-item{padding:7px 8px 13px}.wt-decor-item .wt-decor-portrait{background:#fbf7ee;border-radius:7px;margin-bottom:9px}
+.wt-decor-item[data-locked=true] .wt-decor-portrait{filter:grayscale(1)}
+.wt-mini-reward[data-locked=true]{opacity:.55}
+@media(max-width:560px){.wt-mini-reward .wt-decor-portrait{height:70px}.wt-decor-portrait{height:100px}}

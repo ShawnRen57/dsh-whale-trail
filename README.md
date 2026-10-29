@@ -6,7 +6,7 @@ Whale Trail for DeepSeek Harness 是一款小鲸鱼主题的本地成就插件�
 
 *Whale Trail is a local-first achievement collection, ASCII aquarium and shareable voyage card for DeepSeek Harness.*
 
-> **非官方社区项目，由社区成员独立开发与维护，未获 DeepSeek 官方背书。** 当前版本 **1.0.0**。本版已核对 Harness **0.2.1-rc.2 / 0.2.1-rc.3 发行 SDK 契约**，并在 macOS **0.2.1-rc.3** 完成安装与界面验证；不以单一宿主版本号阻止安装，具体兼容范围见[兼容性](#兼容性)。
+> **非官方社区项目，由社区成员独立开发与维护，未获 DeepSeek 官方背书。** 当前版本 **1.0.1**。本版已核对 Harness **0.2.1-rc.2 / 0.2.1-rc.3 发行 SDK 契约**，并在 macOS **0.2.1-rc.3** 完成安装与界面验证；不以单一宿主版本号阻止安装，具体兼容范围见[兼容性](#兼容性)。
 
 [下载与安装](#安装与升级) · [67 枚徽章](#67-枚徽章7-个系列) · [航海收藏册](#9-段航程36-件海洋收藏) · [水族馆](#把水族馆留在-harness-里) · [航海名片](#五枚珍藏一张航海名片) · [备份与迁移](#备份与迁移) · [反馈](https://github.com/ShawnRen57/dsh-whale-trail/issues)
 
@@ -74,7 +74,7 @@ Whale Trail for DeepSeek Harness 是一款小鲸鱼主题的本地成就插件�
 
 ## 9 段航程，36 件海洋收藏
 
-在「航海收藏册」中，**累计有效使用天数与完整对话轮次同时达标**，对应章节即自动完成。每章获得 4 件原创 ASCII 生物或景物，共 36 件；可以先完成章节，再按喜好决定放哪些进入水族馆。
+在「航海收藏册」中，**累计有效使用天数与完整对话轮次同时达标**，对应章节即自动完成。每章获得 4 件海洋生物或景物，共 36 件；可以先完成章节，再按喜好决定放哪些进入水族馆。
 
 | 章节 | 累计有效使用 | 完整对话 | 装饰奖励 |
 | --- | ---: | ---: | ---: |
@@ -90,7 +90,13 @@ Whale Trail for DeepSeek Harness 是一款小鲸鱼主题的本地成就插件�
 
 章节只依赖这两项真实进度，不要求 Token 消耗、节日或隐藏徽章。以后新增徽章目录也不会重置现有航程。
 
-![航海收藏册：九段递进航程与每章四件海洋奖励](docs/images/voyage-collection.png?v=1.0.0)
+**v1.0.1 更新了全套 36 件收藏插画**：沿用徽章的海军蓝描边、平涂色块与贴纸留白，按真实海洋生物的头型、鳍形、触手和壳体特征分别设计。海带、珊瑚与海底景物也使用同一套画风。已解锁和未解锁状态、章节进度及装饰选择保持一致。
+
+![全套36件海洋收藏插画，按9个章节排列](docs/images/collection-art-v1.0.1.png)
+
+![航海收藏册：新插画与九段递进航程](docs/images/voyage-collection-v1.0.1.png)
+
+*收藏册与装饰选择页展示新静态插画；动态水族馆仍使用当前动画表现，后续独立迭代。插画使用内置 Image Gen 制作并随插件离线打包，设计说明与物料清单见 [collection-art](docs/art/collection-art.md)。*
 
 ## 把水族馆留在 Harness 里
 
@@ -102,7 +108,7 @@ Whale Trail for DeepSeek Harness 是一款小鲸鱼主题的本地成就插件�
 
 锁定装饰不能配置；更换外观不会增加成就进度。宿主缺少所需布局锚点时，页面背景会隐藏，其他可用功能继续工作。
 
-![水族馆编辑器：动态预览、外观配置与已解锁装饰选择](docs/images/aquarium-editor.png?v=1.0.0)
+![装饰选择：新插画、已选状态与未解锁状态](docs/images/collection-selector-v1.0.1.png)
 
 ## 五枚珍藏，一张航海名片
 
@@ -120,17 +126,17 @@ Whale Trail for DeepSeek Harness 是一款小鲸鱼主题的本地成就插件�
 
 发布包已预构建，无需自行编译，也不需要额外配置模型或 API Key。
 
-1. 从 [v1.0.0 Release](https://github.com/ShawnRen57/dsh-whale-trail/releases/tag/v1.0.0) 下载 `dsh-whale-trail-1.0.0.tgz`。
+1. 从 [v1.0.1 Release](https://github.com/ShawnRen57/dsh-whale-trail/releases/tag/v1.0.1) 下载 `dsh-whale-trail-1.0.1.tgz`。
 2. 在终端执行以下命令，将文件路径替换为实际下载位置：
 
 ```sh
-dsh plugin --profile desktop add 'file:/绝对路径/dsh-whale-trail-1.0.0.tgz' --ignore-scripts
+dsh plugin --profile desktop add 'file:/绝对路径/dsh-whale-trail-1.0.1.tgz' --ignore-scripts
 ```
 
 macOS 上如果没有全局 `dsh` 命令，可调用应用自带 CLI：
 
 ```sh
-'/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh' plugin --profile desktop add 'file:/绝对路径/dsh-whale-trail-1.0.0.tgz' --ignore-scripts
+'/Applications/DeepSeek Harness.app/Contents/Resources/runtime/cli/bin/dsh' plugin --profile desktop add 'file:/绝对路径/dsh-whale-trail-1.0.1.tgz' --ignore-scripts
 ```
 
 3. 重启 Harness，打开左下角 **用户信息 → 我的徽章**。
